@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% extends "basic_app/base.html"%}
+{% load static %}
+{% block body_block %}
+<div class="section1bg">
+    <h3>How can I add styling to this page kp</h3>
+    <p>The form is created in forms.py</p>
+    <hr>
+    <div>
+        <p>from django import forms</p>
+        <p>from django.contrib.auth.models import User</p>
+        <p>from basic_app.models import UserProfileInfo</p>
+        <p>class UserForm(forms.ModelForm):</p>
+            <p> &emsp; &emsp;password=forms.CharField(widget=forms.PasswordInput())</p>
+            <p> &emsp; &emsp;class Meta():</p>
+                <p> &emsp; &emsp; &emsp; &emsp;model=User</p>
+                <p> &emsp; &emsp; &emsp; &emsp;fields=('username','email','password')</p>
+        <p>class UserProfileInfoForm(forms.ModelForm):</p>
+            <p> &emsp; &emsp;class Meta():</p>
+                <p> &emsp; &emsp; &emsp; &emsp;model=UserProfileInfo</p>
+                <p> &emsp; &emsp; &emsp; &emsp;fields=('portfolio_site','portfolio_pic')</p>
+    </div>
+</div><br>
+<div class="jumbotron">
+    {% if registered %}
+        <h1>Thank you for registering</h1>
+    {% else %}
+        <h1>Register Here</h1>
+        <h3>Fill out the form</h3>
+        <form method="POST" enctype="multipart(form-data)">
+            <div class="form">
+                {% csrf_token %}
+                {{ user_form.as_p}}
+                {{ profile_form.as_p}}
+            <input type="submit" class="btn btn-primary" value="Register"/>
+            </div>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}
